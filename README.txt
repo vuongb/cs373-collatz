@@ -1,19 +1,21 @@
 Project #1: Collatz
 Date: Wed, 12 Sep 2012
 
-Course Name:
+Course Name: CS 373 Software Engineering
 Unique:
+ 
+53075
 
-First Name:
-Last Name:
-EID:
-E-mail:
-Estimated number of hours:
+First Name: Bryan
+Last Name: Vuong
+EID: BKV85
+E-mail: vuong.bryan@gmail.com
+Estimated number of hours: 8
 Actual    number of hours:
 
-Turnin CS Username:
-GitHub ID:
-GitHub Repository Name:
+Turnin CS Username: vuongb
+GitHub ID: vuongb
+GitHub Repository Name: cs373-collatz
 
 Comments:
 
