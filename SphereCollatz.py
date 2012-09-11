@@ -163,9 +163,9 @@ def collatz_eval (i, j) :
         while (x != 1):
             count += 1
             if x % 2 == 0:
-                x = (3*x) + 1
-            else:
                 x /= 2
+            else:
+                x = (3*x) + 1
         cycleMax = max(count, cycleMax)
     assert cycleMax > 0
     return cycleMax
