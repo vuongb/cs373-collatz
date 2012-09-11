@@ -39,10 +39,21 @@ def collatz_eval (i, j) :
     """
     assert i > 0
     assert j > 0
-    # <your code>
-    v = 1
-    assert v > 0
-    return v
+
+    cycleMax = 0
+    for x in range(i,j+1):
+        count = 1
+        while(x != 1):
+            count += 1
+            # Even
+            if x % 2 == 0 :
+                x = (3*x) + 1
+            # Odd
+            else :
+                x = x/2
+        cycleMax = max(count, cycleMax)
+    assert cycleMax > 0
+    return cycleMax
 
 # -------------
 # collatz_print

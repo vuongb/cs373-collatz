@@ -84,8 +84,8 @@ class TestCollatz (unittest.TestCase) :
         a = [0, 0]
         b = collatz_read(r, a)
         self.assert_(b    == True)
-        self.assert_(a[0] ==  04)
-        self.assert_(a[1] == 09)
+        self.assert_(a[0] ==  4)
+        self.assert_(a[1] == 9)
 
     # ----
     # eval
