@@ -220,8 +220,6 @@ def collatz_createCache (n, preCompArray) :
         preCompArray[ind] = count
 
 
-
-
 #!/usr/bin/env python
 
 # ------------------------------

@@ -11,13 +11,17 @@ Last Name: Vuong
 EID: BKV85
 E-mail: vuong.bryan@gmail.com
 Estimated number of hours: 8
-Actual    number of hours:
+Actual    number of hours: 11
 
 Turnin CS Username: vuongb
 GitHub ID: vuongb
 GitHub Repository Name: cs373-collatz
 
 Comments:
+
+The dumb algorithm gave a time-out on sphere.
+Lazy Cache gave an average time of 7.5 sec.
+Eager Cache gave an average time of 4.5 sec. (Chosen algorithm)
 
 ---------------
 Code of Conduct
