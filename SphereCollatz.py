@@ -38,12 +38,13 @@ def collatz_read (r, a) :
 # collatz_eval
 # ------------
 
-##def collatz_eval (i, j, w) :
+##def collatz_eval (i, j) :
 def collatz_eval (i, j, a) :
     """
     i is the beginning of the range, inclusive
     j is the end       of the range, inclusive
     return the max cycle length in the range [i, j]
+    Need to pass the pre-Computed Array as an argument
     """
     assert i > 0
     assert j > 0
@@ -103,12 +104,11 @@ def collatz_eval (i, j, a) :
 
 
 #-----------------------------------------------------------
-# Pre-Comp Array    
+# Eager cache  
     cycleMax = 0
-    n = 100000
+    n = 50000
     for x in range(b,c+1):
         assert x > 0
-        
         count = 1
         if x <= n:
             cycleMax = max(cycleMax, a[x-1])
@@ -123,9 +123,9 @@ def collatz_eval (i, j, a) :
                     count += a[x-1]
                 else:
                     count += 1
+            assert count > 0
             cycleMax = max(cycleMax, count)
-                
-
+            
     assert cycleMax > 0
     return cycleMax
 
@@ -152,11 +152,56 @@ def collatz_solve (r, w) :
     read, eval, print loop
     r is a reader
     w is a writer
+    Need to create precomputed cache array
     """
 #-----------------------------------------------------------
-# Pre-Comp Array   
-    n = 100000
+# Eager cache  
+##    n = 100000
+##    preCompArray = [0]*n
+##    for ind in range(n):
+##        findNum = ind + 1
+##        count = 1
+##        while (findNum != 1 and ((findNum-1) >= n or preCompArray[findNum - 1] == 0)):
+##            if (findNum % 2) == 0:
+##                findNum /= 2
+##                if ((findNum-1) >= n or ((findNum - 1) < n and preCompArray[findNum-1] == 0)):
+##                    count += 1
+##            else:
+##                findNum = findNum + (findNum >> 1) + 1
+##                if ((findNum-1) >= n or ((findNum - 1) < n and preCompArray[findNum-1] == 0)):
+##                    count += 2
+##        if(preCompArray[findNum - 1] != 0):
+##            count += preCompArray[findNum - 1]
+##        preCompArray[ind] = count
+    n = 50000
     preCompArray = [0]*n
+    collatz_createCache(n, preCompArray)
+
+    assert preCompArray[0] > 0
+    assert preCompArray[n-1] > 0
+    
+    a = [0, 0]
+    while collatz_read(r, a) :
+        v = collatz_eval(a[0], a[1], preCompArray)
+        collatz_print(w, a[0], a[1], v)
+
+#-----------------------------------------------------------
+# Dumb Algorithm/Lazy Cache
+##    a = [0, 0]
+##    while collatz_read(r, a) :
+##        v = collatz_eval(a[0], a[1], w)
+##        collatz_print(w, a[0], a[1], v)
+
+# -------------
+# collatz_EagerCache
+# -------------
+
+def collatz_createCache (n, preCompArray) :
+    """
+    Find the cycle length for each value up to n
+    Array index, i, corresponds with the number i+1
+    """
+    
     for ind in range(n):
         findNum = ind + 1
         count = 1
@@ -171,19 +216,8 @@ def collatz_solve (r, w) :
                     count += 2
         if(preCompArray[findNum - 1] != 0):
             count += preCompArray[findNum - 1]
+        assert count > 0
         preCompArray[ind] = count
-    a = [0, 0]
-    while collatz_read(r, a) :
-        v = collatz_eval(a[0], a[1], preCompArray)
-        collatz_print(w, a[0], a[1], v)
-
-#-----------------------------------------------------------
-# Dumb Algorithm/Lazy Cache
-##    a = [0, 0]
-##    while collatz_read(r, a) :
-##        v = collatz_eval(a[0], a[1], w)
-##        collatz_print(w, a[0], a[1], v)
-
 
 
 
