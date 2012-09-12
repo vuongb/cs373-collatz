@@ -38,7 +38,7 @@ def collatz_read (r, a) :
 # collatz_eval
 # ------------
 
-#def collatz_eval (i, j) :
+##def collatz_eval (i, j, w) :
 def collatz_eval (i, j, a) :
     """
     i is the beginning of the range, inclusive
@@ -47,62 +47,87 @@ def collatz_eval (i, j, a) :
     """
     assert i > 0
     assert j > 0
+    
+    b = min(i,j)
+    c = max(i,j)
+
+    assert b <= c
+
+#-----------------------------------------------------------
+# Lazy Cache Algorithm
+##    cycleMax = 0
+##    n = 1000000
+##    cacheArray = [0] * n
+##    cacheArray[0] = 1
+##    for x in range(b, c+1):
+##        num = x
+##        
+##        if (cacheArray[x-1] != 0):
+##            cycleMax = max(cycleMax, cacheArray[x-1])
+##        else:
+##            addList = []
+##            while(num != 1 and ((num-1) >= n or ((num-1) < n and cacheArray[num-1] == 0))):
+##                if( (num-1) < n):
+##                    addList.append(num)
+##                for item in addList:
+##                    cacheArray[item-1] += 1
+##                if (num % 2 == 0):
+##                    num /= 2
+##                else:
+##                    num = (3*num)+1
+##
+##            for item in addList:
+##                cacheArray[item-1] += cacheArray[num-1]
+##            cycleMax = max(cycleMax, cacheArray[x-1])
+##            
+##    assert cycleMax > 0
+##    return cycleMax
+
+  
+#-----------------------------------------------------------
 # Dumb Algorithm
 ##    cycleMax = 0
-##    for x in range(i, j+1):
+##    for x in range(b, c+1):
 ##        count = 1
 ##        while (x != 1):
-##            count += 1
+##            #count += 1
 ##            if x % 2 == 0:
 ##                x /= 2
+##                count += 1
 ##            else:
-##                x = (3*x) + 1
+##                x = x + (x >> 1) + 1
+##                count += 2
 ##        cycleMax = max(count, cycleMax)
 ##    assert cycleMax > 0
 ##    return cycleMax
 
+
+#-----------------------------------------------------------
 # Pre-Comp Array    
     cycleMax = 0
-    c = max(i,j)
-    b = min(i,j)
+    n = 100000
     for x in range(b,c+1):
         assert x > 0
         
         count = 1
-        if x <= 100000:
+        if x <= n:
             cycleMax = max(cycleMax, a[x-1])
         else:
-            while (x != 1 and x > 100000):
-                #count += 1
+            while (x != 1 and x > n):
                 if x % 2 == 0:
                     x /= 2
                 else:
                     x = (3*x) + 1
                     
-            if x <= 100000:
-                count += a[x-1]
-            else:
-                count += 1
+                if x <= n:
+                    count += a[x-1]
+                else:
+                    count += 1
             cycleMax = max(cycleMax, count)
                 
 
     assert cycleMax > 0
     return cycleMax
-##    
-##    cycleMax = 0
-##    for x in range(i, j+1):
-##        count = 1
-##        while (x != 1):
-##            count += 1
-##            # Even
-##            if x % 2 == 0:
-##                x = (3*x) + 1
-##            # Odd
-##            else:
-##                x /= 2
-##        cycleMax = max(count, cycleMax)
-##    assert cycleMax > 0
-##    return cycleMax
 
 # -------------
 # collatz_print
@@ -128,7 +153,8 @@ def collatz_solve (r, w) :
     r is a reader
     w is a writer
     """
-# Pre Comp Array
+#-----------------------------------------------------------
+# Pre-Comp Array   
     n = 100000
     preCompArray = [0]*n
     for ind in range(n):
@@ -137,10 +163,12 @@ def collatz_solve (r, w) :
         while (findNum != 1 and ((findNum-1) >= n or preCompArray[findNum - 1] == 0)):
             if (findNum % 2) == 0:
                 findNum /= 2
+                if ((findNum-1) >= n or ((findNum - 1) < n and preCompArray[findNum-1] == 0)):
+                    count += 1
             else:
-                findNum = (3*findNum) + 1
-            if ((findNum-1) >= n or ((findNum - 1) < n and preCompArray[findNum-1] == 0)):
-                count += 1
+                findNum = findNum + (findNum >> 1) + 1
+                if ((findNum-1) >= n or ((findNum - 1) < n and preCompArray[findNum-1] == 0)):
+                    count += 2
         if(preCompArray[findNum - 1] != 0):
             count += preCompArray[findNum - 1]
         preCompArray[ind] = count
@@ -149,11 +177,13 @@ def collatz_solve (r, w) :
         v = collatz_eval(a[0], a[1], preCompArray)
         collatz_print(w, a[0], a[1], v)
 
-
+#-----------------------------------------------------------
+# Dumb Algorithm/Lazy Cache
 ##    a = [0, 0]
 ##    while collatz_read(r, a) :
-##        v = collatz_eval(a[0], a[1])
+##        v = collatz_eval(a[0], a[1], w)
 ##        collatz_print(w, a[0], a[1], v)
+
 
 
 

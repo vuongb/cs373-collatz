@@ -135,6 +135,12 @@ class TestCollatz (unittest.TestCase) :
         collatz_print(w, 900, 1000, 174)
         self.assert_(w.getvalue() == "900 1000 174\n")
         
+
+    def test_print_5 (self) :
+        w = StringIO.StringIO()
+        collatz_print(w, 972699, 998031, 440)
+        self.assert_(w.getvalue() == "972699, 998031, 440\n")
+
     
 
     # -----
