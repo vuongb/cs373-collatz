@@ -106,6 +106,10 @@ class TestCollatz (unittest.TestCase) :
     def test_eval_4 (self) :
         v = collatz_eval(900, 1000)
         self.assert_(v == 174)
+        
+    def test_eval_5 (self) :
+        v = collatz_eval(972699, 998031)
+        self.assert_(v == 440)
 
     # -----
     # print
@@ -131,6 +135,7 @@ class TestCollatz (unittest.TestCase) :
         collatz_print(w, 900, 1000, 174)
         self.assert_(w.getvalue() == "900 1000 174\n")
         
+    
 
     # -----
     # solve
