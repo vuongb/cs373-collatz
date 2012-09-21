@@ -2,7 +2,7 @@
 
 	 student : Bryan Vuong
 
-Total: 67/70 - 0% = 67/70
+Total: 62/65 - 0% = 62/65
 
 ==== Scoring Breakdown =====
 
@@ -22,4 +22,4 @@ Documentation : 5/5
 
 ==== Comment ====
 0.Nice job on this project, code is clear and good.1. Please output the results for unit test in .py.out file; 2. Please make sure you get the acceptance test file pushed to public repo, or check whether id before - is your csid; 
-Missed File: (if you missed some files, the extra credit will be less than 5)Collatz.log 
+Missed File: (if you missed some files, the entire grades will be 1 point off)Collatz.log 
